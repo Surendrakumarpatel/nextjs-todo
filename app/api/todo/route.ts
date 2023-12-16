@@ -18,7 +18,7 @@ export async function PUT(req:NextRequest){
   try {
     const body = await req.json();
     const {title, description, id} = body;
-    await Todo.findByIdAndUpdate({_id:body._id})
+    await Todo.findByIdAndUpdate({_id:body._id});
   } catch (error) {
     
   }

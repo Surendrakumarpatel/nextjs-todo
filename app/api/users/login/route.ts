@@ -6,7 +6,7 @@ import jwt from "jsonwebtoken";
 
 connect();
 
-export default async function POST(req: NextRequest) {
+export async function POST(req: NextRequest) {
     try {
         const body = await req.json();
         const { email, password } = body;
@@ -29,12 +29,13 @@ export default async function POST(req: NextRequest) {
 
         const tokenData = {
             id: user._id,
-            email: user.email
+            email: user.email,
+            name:user.name,
         }
         const token = await jwt.sign(tokenData, process.env.TOKEN_SECRET!, { expiresIn: "1d" });
 
         const res = NextResponse.json({
-            message: "Login successful",
+            message: `Welcome back ${user.name}`,
             success: true,
         }, { status: 200 })
 
