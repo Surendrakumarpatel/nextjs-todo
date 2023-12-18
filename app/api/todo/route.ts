@@ -1,6 +1,10 @@
+import { connect } from "@/database/dbconnection";
 import { Todo } from "@/models/todoSchema";
 import { NextRequest, NextResponse } from "next/server";
-export default async function POST(req:NextRequest){
+
+connect();
+
+export async function POST(req:NextRequest){
     try {
         const body = await req.json();
         const {title, description} = body;
@@ -14,13 +18,4 @@ export default async function POST(req:NextRequest){
     }
 }
 
-export async function PUT(req:NextRequest){
-  try {
-    const body = await req.json();
-    const {title, description, id} = body;
-    await Todo.findByIdAndUpdate({_id:body._id});
-  } catch (error) {
-    
-  }
-
-}
+ 
