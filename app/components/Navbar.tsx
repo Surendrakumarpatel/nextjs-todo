@@ -5,6 +5,32 @@ import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
 import { CiSearch } from "react-icons/ci";
 import Avatar from 'react-avatar';
+import Link from "next/link"
+
+const navItem = [
+  {
+    text:"About",
+    link:"/about"
+  },
+  {
+    text:"Contact",
+    link:"/contact",
+  },
+  {
+    text:"Todos",
+    link:"/todos"
+  }
+]
+
+const NavItems = () =>{
+   return navItem.map((item, idx)=>{
+    return(
+      <ul> 
+        <Link href={item.link}>{item.text}</Link>
+      </ul>
+    )
+   })
+}
 
 const Navbar = () => {
   const router = useRouter();
@@ -39,8 +65,9 @@ const Navbar = () => {
       </div>
       <div className='flex space-x-4 items-center text-center bg-white shadow-lg py-5 px-2 w-fit mx-auto'>
         <Avatar name="Patel Programmer" size="30" round={true}/>
-        <p className=' italic'>Hello Mr, Patel now you can create your first cpiccheck</p>
+        <p className='italic font-bold'>Hello Mr, Patel now you can create your first cpiccheck</p>
       </div>
+      <NavItems/>
 
     </header>
   )
