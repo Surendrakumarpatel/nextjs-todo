@@ -12,9 +12,11 @@ const SignupPage = () => {
         email:"",
         password:""
     })
+    const [loading, setLoading] = useState(false);
 
     const submitHandler = async () =>{
         try {
+            setLoading(true);
             const res = await axios.post("/api/users/signup", user);
             console.log(res);
             
@@ -23,14 +25,16 @@ const SignupPage = () => {
         } catch (error:any) {
             console.log(error);
             toast.error(error.response.data.message);
+        } finally{
+            setLoading(false);
         }
     }
 
     return (
-        <div className="flex items-center justify-center min-h-screen">
+        <div className="flex items-center justify-center min-h-screen bg-yellow-700 md:bg-transparent">
             <div className="flex space-x-4 p-8 bg-white rounded-md shadow-lg">
                 <div>
-                    <h1 className="text-[#2C444E] font-bold text-lg">SIGNUP</h1>
+                    <h1 className="text-[#2C444E] font-bold text-lg">{`${loading ? "loading..." : "SIGNUP"}`}</h1>
                     <div className="flex flex-col mt-5">
                         <input
                             type="text"
@@ -59,10 +63,10 @@ const SignupPage = () => {
                         />
                     </div>
 
-                    <button onClick={submitHandler} className="bg-[#2C444E] text-white py-2 w-full mt-10 rounded-md">Signup</button>
+                    <button onClick={submitHandler} className="bg-[#2C444E] text-white py-2 w-full mt-10 rounded-md">{`${loading ? "loading..." :"Signup"}`}</button>
                     <p className="mt-5">Already have an account? <Link href="/login" className="text-blue-600 font-bold">Login</Link></p>
                 </div>
-                <div>
+                <div className="hidden md:block">
                     <img
                         width={"350px"}
                         src="https://img.freepik.com/free-vector/list-concept-illustration_114360-2498.jpg?w=740&t=st=1702737100~exp=1702737700~hmac=1b7b366698ac5359b2fc8d4cf7c0380695d7b7b200d922e9f683922ce6dec98e"

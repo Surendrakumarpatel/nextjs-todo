@@ -12,8 +12,11 @@ const LoginPage = () => {
         password: ""
     })
 
+    const [loading, setLoading] = useState(false);
+
     const submitHandler = async () => {
         try {
+            setLoading(true);
             const res = await axios.post("/api/users/login", user);
             console.log(res);
             toast.success(res.data.message);
@@ -21,13 +24,15 @@ const LoginPage = () => {
         } catch (error: any) {
             console.log(error);
             toast.error(error.response.data.message);
+        } finally{
+            setLoading(false);
         }
     }
     return (
-        <div className="flex items-center justify-center min-h-screen">
+        <div className="flex items-center justify-center min-h-screen bg-yellow-700 md:bg-transparent">
             <div className="flex space-x-4 p-8 bg-white rounded-md shadow-md">
                 <div>
-                    <h1 className="text-[#2C444E] font-bold text-lg">LOGIN</h1>
+                    <h1 className="text-[#2C444E] font-bold text-lg">{`${loading ? "loading..." : "LOGIN"}`}</h1>
 
                     <div className="flex flex-col mt-5">
                         <input
@@ -48,10 +53,10 @@ const LoginPage = () => {
                         />
                     </div>
 
-                    <button onClick={submitHandler} className="bg-[#2C444E] text-white py-2 w-full mt-10 rounded-md">Login</button>
+                    <button onClick={submitHandler} className="bg-[#2C444E] text-white py-2 w-full mt-10 rounded-md">{`${loading ? "loading..." : "Login"}`}</button>
                     <p className="mt-5">Dont have an account? <Link href="/signup" className="text-blue-600 font-bold">Signup</Link></p>
                 </div>
-                <div>
+                <div className="hidden md:block">
                     <img
                         width={"350px"}
                         src="https://img.freepik.com/free-vector/list-concept-illustration_114360-2498.jpg?w=740&t=st=1702737100~exp=1702737700~hmac=1b7b366698ac5359b2fc8d4cf7c0380695d7b7b200d922e9f683922ce6dec98e"
